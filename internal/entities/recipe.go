@@ -1,7 +1,7 @@
-package recipes
+package entities
 
 type MaterialCost struct {
-	Resources string
+	Resource string
 	Refined string
 	Reagent string
 }
@@ -10,5 +10,4 @@ type Recipe struct {
 	ID string
 	Name string
 	MaterialCost string
-//	BonusChance uint8
 }

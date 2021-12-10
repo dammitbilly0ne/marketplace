@@ -1,16 +1,15 @@
-package refined
+package entities
 
 type Refined struct {
 	ID string
 	Name string
 	Type string
 	Tier string
+	Rarity string
 	ResourceCost string
-//	BonusChance string    or    *int (decimal numbers / calculations??
 	}
 
 type ResourceCost struct {
-	 Resources string
+	 Resource string
 	 Refined string
-	 Reagent string
 }
