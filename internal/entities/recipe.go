@@ -1,13 +1,15 @@
 package entities
 
-type MaterialCost struct {
-	Resource string
-	Refined string
-	Reagent string
+type Recipe struct {
+	ID           string
+	Name         string
+	MaterialCost MaterialCost
 }
 
-type Recipe struct {
-	ID string
-	Name string
-	MaterialCost string
+type MaterialCost struct {
+	ID       string
+	Name     string
+	Resource string
+	Refined  string
+	Reagent  Reagent
 }

@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/dammitbilly0ne/marketplace/internal/handlers"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 	"log"

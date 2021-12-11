@@ -1,0 +1,183 @@
+syntax = "proto3";
+
+package marketplace.api.alpha;
+
+service MarketplaceAPI {
+  rpc StoreItem(StoreItemRequest) returns (StoreItemResponse);
+  rpc GetItemByName(GetItemByNameRequest) returns (GetItemByNameResponse);
+  rpc StoreRecipe(StoreRecipeRequest) returns (StoreRecipeResponse);
+  rpc GetRecipeByName(GetRecipeByNameRequest) returns (GetRecipeByNameResponse);
+  rpc StoreMaterialCost(StoreMaterialCostRequest) returns (StoreMaterialCostResponse);
+  rpc GetMaterialCostByName(GetMaterialCostByNameRequest) returns (GetMaterialCostByNameResponse);
+  rpc StoreRefined(StoreRefinedRequest) returns (StoreRefinedResponse);
+  rpc GetRefinedByName(GetRefinedByNameRequest) returns (GetRefinedByNameResponse);
+  rpc StoreResourceCost(StoreResourceCostRequest) returns (StoreResourceCostResponse);
+  rpc GetResourceCostByName(GetResourceCostByNameRequest) returns (GetResourceCostByNameResponse);
+  rpc StoreReagent(StoreReagentRequest) returns (StoreReagentResponse);
+  rpc StoreResource(StoreResourceRequest) returns (StoreResourceResponse);
+  rpc GetResourceByName(GetResourceByNameRequest) returns (GetResourceByNameResponse);
+}
+
+message StoreItemRequest {
+  string name = 1;
+  string tier = 2;
+  string rarity = 3;
+}
+
+message StoreItemResponse {
+  Item item =1;
+}
+
+message Item {
+  string id = 1;
+  string name = 2;
+  string tier = 3;
+  string rarity = 4;
+  string gearScore = 5;
+}
+
+message GetItemByNameRequest {
+  string item = 1;
+}
+
+message GetItemByNameResponse {
+  Item item = 1;
+}
+
+message StoreRecipeRequest {
+  string name = 1;
+  string materialCost = 2;
+}
+
+message StoreRecipeResponse {
+  Recipe recipe = 1;
+}
+
+message Recipe {
+  string id = 1;
+  string name = 2;
+  string materialCost = 3;
+}
+
+message GetRecipeByNameRequest {
+  string recipe = 1;
+}
+
+message GetRecipeByNameResponse {
+  Recipe recipe = 1;
+}
+
+message StoreMaterialCostRequest {
+  string name = 1;
+}
+
+message StoreMaterialCostResponse {
+  MaterialCost materialCost = 1;
+}
+
+message MaterialCost {
+  string id = 1;
+  string name = 2;
+  string resource = 3;
+  string refined = 4;
+  string reagent = 5;
+}
+
+message GetMaterialCostByNameRequest {
+  string materialCost = 1;
+}
+
+message GetMaterialCostByNameResponse {
+  MaterialCost materialCost = 1;
+}
+
+message StoreRefinedRequest {
+  string name = 1;
+  string tier = 2;
+  string rarity = 3;
+  string resourceCost = 4;
+}
+
+message StoreRefinedResponse {
+  Refined refined = 1;
+}
+
+message Refined {
+  string id = 1;
+  string name =2;
+  string type = 3;
+  string tier = 4;
+  string rarity = 5;
+  string resourceCost = 6;
+}
+
+message GetRefinedByNameRequest {
+  string refined = 1;
+}
+
+message GetRefinedByNameResponse {
+  Refined refined = 1;
+}
+
+message StoreResourceCostRequest {
+  string name = 1;
+}
+
+message StoreResourceCostResponse {
+  ResourceCost resourceCost = 1;
+}
+
+message ResourceCost {
+  string id = 1;
+  string name = 2;
+  string resource =3;
+  string reagent = 4;
+}
+
+message GetResourceCostByNameRequest {
+  string resourceCost = 1;
+}
+
+message GetResourceCostByNameResponse {
+  ResourceCost resourceCost = 1;
+}
+
+message StoreReagentRequest {
+  string name = 1;
+  string tier = 2;
+}
+
+message StoreReagentResponse {
+  Reagent reagent = 1;
+}
+
+message Reagent {
+  string id = 1;
+  string name = 2;
+  string tier = 3;
+  string rarity = 4;
+}
+
+message StoreResourceRequest {
+  string name = 1;
+}
+
+message StoreResourceResponse {
+  Resource resource = 1;
+}
+
+message Resource {
+  string id = 1;
+  string name = 2;
+  string type = 3;
+  string tier = 4;
+  string rarity = 5;
+}
+
+message GetResourceByNameRequest {
+  string resource = 1;
+}
+
+message GetResourceByNameResponse {
+  Resource resource = 1;
+}
