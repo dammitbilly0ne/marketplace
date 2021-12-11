@@ -3,6 +3,11 @@ package handlers
 import (
 	"context"
 	"errors"
+	"github.com/dammitbilly0ne/marketplace/internal/entities"
+	"github.com/dammitbilly0ne/marketplace/internal/repositories/item"
+	"github.com/dammitbilly0ne/marketplace/internal/repositories/recipe"
+	"github.com/dammitbilly0ne/marketplace/internal/repositories/refined"
+	"github.com/dammitbilly0ne/marketplace/internal/repositories/resource"
 )
 
 const(
@@ -31,38 +36,39 @@ const(
 )
 
 type Alpha struct {
-	itemRepo item.repositories
-	recipeRepo recipe.repositories
-	refinedRepo refined.repositories
-	resourceRepo resource.repositories
+	itemRepo item.Repository
+	recipeRepo recipe.Repository
+	refinedRepo refined.Repository
+	resourceRepo resource.Repository
 }
 type AlphaConfig struct {
-	ItemRepo item.repositories
-	RecipeRepo recipe.repositories
-	RefinedRepo refined.repositories
-	ResourceRepo resource.repositories
+	ItemRepo item.Repository
+	RecipeRepo recipe.Repository
+	RefinedRepo refined.Repository
+	ResourceRepo resource.Repository
 }
 
 func NewAlpha(cfg *AlphaConfig)(*Alpha, error){
 	if cfg ==nil {
-		return nil, errors.new(configReqMsg)
+		return nil, errors.New(configReqMsg)
 	}
 	if cfg.ItemRepo == nil {
-		return nil, errors.new(itemRepoReqMsg)
+		return nil, errors.New(itemRepoReqMsg)
 	}
 	if cfg.RecipeRepo == nil {
-		return nil, errors.new(recipeRepoReqMsg)
+		return nil, errors.New(recipeRepoReqMsg)
 	}
 	if cfg.RefinedRepo == nil {
-		return nil, errors.new(refinedRepoReqMsg)
+		return nil, errors.New(refinedRepoReqMsg)
 	}
 	if cfg.ResourceRepo == nil {
-		return nil, errors.new(resourceRepoReqMsg)
+		return nil, errors.New(resourceRepoReqMsg)
 	}
+
 	return &Alpha{
 		itemRepo: cfg.ItemRepo,
 		recipeRepo: cfg.RecipeRepo,
-		refinedRepo: &cfg.RefinedRepo,
+		refinedRepo: cfg.RefinedRepo,
 		resourceRepo: cfg.ResourceRepo,
 	},nil
 }
@@ -109,8 +115,8 @@ func (a *Alpha) StoreRecipe(ctx context.Context, req *protos.StoreRecipeRequest)
 		return nil, errors.New(recipeMatCostReqMsg)
 	}
 	recipe, err := a.recipeRepo.CreateRecipe(&entities.Recipe{
-		RecipeName: req.RecipeName,
-		RecipeMatCost: req.RecipeMatCost,
+		Name: req.RecipeName,
+		MaterialCost: req.RecipeMatCost,
 	})
 	if err != nil{
 		return nil, err
