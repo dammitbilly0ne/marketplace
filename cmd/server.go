@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/dammitbilly0ne/marketplace/internal/handlers"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 	"log"
@@ -20,12 +19,6 @@ var serverCommand = &cobra.Command{
 			log.Fatalf("failed to listen: %v", err)
 		}
 		s := grpc.NewServer()
-		handler, err := handlers.NewAlpha(&handlers.AlphaConfig{})
-		if err != nil {
-			log.Fatal("err returned from handlers.NewAlpha()")
-		}
-
-		protos.RegisterMarketplaceAPIServer(s, handler)
 
 		log.Printf("server listening at %v", lis.Addr())
 		if err := s.Serve(lis); err != nil {
