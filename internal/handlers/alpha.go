@@ -8,6 +8,7 @@ import (
 	"github.com/dammitbilly0ne/marketplace/internal/repositories/recipe"
 	"github.com/dammitbilly0ne/marketplace/internal/repositories/refined"
 	"github.com/dammitbilly0ne/marketplace/internal/repositories/resource"
+	marketplaceapialpha "github.com/dammitbilly0ne/marketplace/protos"
 )
 
 const (
@@ -73,7 +74,7 @@ func NewAlpha(cfg *AlphaConfig) (*Alpha, error) {
 	}, nil
 }
 
-func (a *Alpha) StoreItem(cxt context.Context, req *protosStoreItemRequest) (*protos.StoreItemResponse, error) {
+func (a *Alpha) StoreItem(cxt context.Context, req *marketplaceapialpha.StoreItemRequest) (*protos.StoreItemResponse, error) {
 	if req == nil {
 		return nil, errors.New(reqFieldMsg)
 	}
