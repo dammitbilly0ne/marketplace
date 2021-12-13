@@ -10,46 +10,46 @@ import (
 	"github.com/dammitbilly0ne/marketplace/internal/repositories/resource"
 )
 
-const(
-	configReqMsg = "config is required"
-	itemReqMsg = "and item is required"
-	recipeReqMsg = "recipe is required"
-	refinedReqMsg = "refined is required"
-	resourceReqMsg = "resource is required"
-	itemRepoReqMsg = "item repo is required"
-	recipeRepoReqMsg = "recipe repo is required"
-	refinedRepoReqMsg = "refined repo is required"
-	resourceRepoReqMsg = "resource repo is required"
-	reqFieldMsg = "required field is missing"
-	itemNameReqMsg = "item name is required"
-	itemTierReqMsg = "item tier is required"
-	itemRarityReqMsg = "item rarity is required"
-	recipeNameReqMsg = "recipe name is required"
+const (
+	configReqMsg        = "config is required"
+	itemReqMsg          = "and item is required"
+	recipeReqMsg        = "recipe is required"
+	refinedReqMsg       = "refined is required"
+	resourceReqMsg      = "resource is required"
+	itemRepoReqMsg      = "item repo is required"
+	recipeRepoReqMsg    = "recipe repo is required"
+	refinedRepoReqMsg   = "refined repo is required"
+	resourceRepoReqMsg  = "resource repo is required"
+	reqFieldMsg         = "required field is missing"
+	itemNameReqMsg      = "item name is required"
+	itemTierReqMsg      = "item tier is required"
+	itemRarityReqMsg    = "item rarity is required"
+	recipeNameReqMsg    = "recipe name is required"
 	recipeMatCostReqMsg = "recipe material cost is required"
-	refinedNameReqMsg = "refined name is required"
-	refinedTypeReqMsg = "refined material type is required"
+	refinedNameReqMsg   = "refined name is required"
+	refinedTypeReqMsg   = "refined material type is required"
 	refinedRarityReqMsg = "refined rarity is required"
-	refinedTierReqMsg = "refined tier is required"
-	resourceNameReqMsg = "resource name is required"
-	resourceTypeReqMsg = "resource type is required"
-	resourceTierReqMsg = "resource tier is required"
+	refinedTierReqMsg   = "refined tier is required"
+	resourceNameReqMsg  = "resource name is required"
+	resourceTypeReqMsg  = "resource type is required"
+	resourceTierReqMsg  = "resource tier is required"
 )
 
 type Alpha struct {
-	itemRepo item.Repository
-	recipeRepo recipe.Repository
-	refinedRepo refined.Repository
+	itemRepo     item.Repository
+	recipeRepo   recipe.Repository
+	refinedRepo  refined.Repository
 	resourceRepo resource.Repository
 }
 type AlphaConfig struct {
-	ItemRepo item.Repository
-	RecipeRepo recipe.Repository
-	RefinedRepo refined.Repository
+	ItemRepo     item.Repository
+	RecipeRepo   recipe.Repository
+	RefinedRepo  refined.Repository
 	ResourceRepo resource.Repository
 }
 
-func NewAlpha(cfg *AlphaConfig)(*Alpha, error){
-	if cfg ==nil {
+func NewAlpha(cfg *AlphaConfig) (*Alpha, error) {
+	if cfg == nil {
 		return nil, errors.New(configReqMsg)
 	}
 	if cfg.ItemRepo == nil {
@@ -66,14 +66,14 @@ func NewAlpha(cfg *AlphaConfig)(*Alpha, error){
 	}
 
 	return &Alpha{
-		itemRepo: cfg.ItemRepo,
-		recipeRepo: cfg.RecipeRepo,
-		refinedRepo: cfg.RefinedRepo,
+		itemRepo:     cfg.ItemRepo,
+		recipeRepo:   cfg.RecipeRepo,
+		refinedRepo:  cfg.RefinedRepo,
 		resourceRepo: cfg.ResourceRepo,
-	},nil
+	}, nil
 }
 
-func (a *Alpha) StoreItem(cxt context.Context, req *protos.StoreItemRequest)(*protos.StoreItemResponse, error){
+func (a *Alpha) StoreItem(cxt context.Context, req *protosStoreItemRequest) (*protos.StoreItemResponse, error) {
 	if req == nil {
 		return nil, errors.New(reqFieldMsg)
 	}
@@ -87,8 +87,8 @@ func (a *Alpha) StoreItem(cxt context.Context, req *protos.StoreItemRequest)(*pr
 		return nil, errors.New(itemRarityReqMsg)
 	}
 	item, err := a.itemRepo.CreateItem(&entities.Item{
-		ItemName: req.ItemName,
-		ItemTier: req.ItemTier,
+		ItemName:   req.ItemName,
+		ItemTier:   req.ItemTier,
 		ItemRarity: req.ItemRarity,
 	})
 	if err != nil {
@@ -96,15 +96,15 @@ func (a *Alpha) StoreItem(cxt context.Context, req *protos.StoreItemRequest)(*pr
 	}
 	return &protos.StoreItemResponse{
 		Item: &protos.Item{
-			ItemName: item.ItemName,
-			ItemTier: item.ItemTier,
+			ItemName:   item.ItemName,
+			ItemTier:   item.ItemTier,
 			ItemRarity: item.ItemRarity,
-			Id: item.ID,
+			Id:         item.ID,
 		},
 	}, nil
 }
 
-func (a *Alpha) StoreRecipe(ctx context.Context, req *protos.StoreRecipeRequest)(*protos.StoreRecipeResonse, error){
+func (a *Alpha) StoreRecipe(ctx context.Context, req *protos.StoreRecipeRequest) (*protos.StoreRecipeResonse, error) {
 	if req == nil {
 		return nil, errors.New(reqFieldMsg)
 	}
@@ -115,22 +115,22 @@ func (a *Alpha) StoreRecipe(ctx context.Context, req *protos.StoreRecipeRequest)
 		return nil, errors.New(recipeMatCostReqMsg)
 	}
 	recipe, err := a.recipeRepo.CreateRecipe(&entities.Recipe{
-		Name: req.RecipeName,
+		Name:         req.RecipeName,
 		MaterialCost: req.RecipeMatCost,
 	})
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
-	return &protos.StoreRecipeResponse {
-		Recipe: &protos.Recipe {
-			RecipeName: req.RecipeName,
+	return &protos.StoreRecipeResponse{
+		Recipe: &protos.Recipe{
+			RecipeName:    req.RecipeName,
 			RecipeMatCost: req.RecipeMatCost,
-			Id: recipe.ID,
+			Id:            recipe.ID,
 		},
 	}, nil
 }
 
-func (a *Alpha) StoreRefined(cxt context.Context, req *protos.StoreRefinedRequest)(*protos.StoreRefinedResponse, error) {
+func (a *Alpha) StoreRefined(cxt context.Context, req *protos.StoreRefinedRequest) (*protos.StoreRefinedResponse, error) {
 	if req == nil {
 		return nil, errors.New(reqFieldMsg)
 	}
@@ -146,27 +146,27 @@ func (a *Alpha) StoreRefined(cxt context.Context, req *protos.StoreRefinedReques
 	if req.RefinedTier == {
 		return nil, errors.New(refinedTierReqMsg)
 	}
-	refined , err := a.refinedRepo.CreateRefined(&entities.Refined{
-		RefinedName: req.RefinedName,
-		RefinedType: req.RefinedType,
+	refined, err := a.refinedRepo.CreateRefined(&entities.Refined{
+		RefinedName:   req.RefinedName,
+		RefinedType:   req.RefinedType,
 		RefinedRarity: req.RefinedRarity,
-		RefinedTier: req.RefinedTier,
+		RefinedTier:   req.RefinedTier,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return &protos.StoreRefinedResponse {
+	return &protos.StoreRefinedResponse{
 		Refined: &protos.Refined{
-			RefinedName: refined.RefinedName,
-			RefinedType: refined.RefinedType,
+			RefinedName:   refined.RefinedName,
+			RefinedType:   refined.RefinedType,
 			RefinedRarity: refined.RefinedRarity,
-			RefinedTier: refined.RefinedTier,
-			Id: refined.ID,
+			RefinedTier:   refined.RefinedTier,
+			Id:            refined.ID,
 		},
 	}, nil
 }
 
-func (a *Alpha) StoreResource(cxt context.Context, req *protos.StoreResourceRequest)(*protos.StoreResourceResponse, error) {
+func (a *Alpha) StoreResource(cxt context.Context, req *protos.StoreResourceRequest) (*protos.StoreResourceResponse, error) {
 	if req == nil {
 		return nil, errorst.New(reqFieldMsg)
 	}
@@ -192,7 +192,7 @@ func (a *Alpha) StoreResource(cxt context.Context, req *protos.StoreResourceRequ
 			ResourceName: resource.ResourceName,
 			ResourceType: resource.ResourceType,
 			ResourceTier: resource.ResourceTier,
-			Id: resource.ID,
+			Id:           resource.ID,
 		},
 	}, nil
 }
