@@ -4,6 +4,7 @@ type Recipe struct {
 	ID     string
 	Name   string
 	Inputs []*MaterialCost
+	Output []*RecipeOutput
 }
 
 type MaterialCost struct {
@@ -15,6 +16,7 @@ type MaterialCost struct {
 type RecipeOutput struct {
 	ID   string
 	Name string
+	Qty  int
 }
 
 func (r *Recipe) GenerateOutput(actualInputs []*MaterialCost) []*RecipeOutput {
